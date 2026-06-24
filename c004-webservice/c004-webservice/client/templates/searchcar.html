@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>{{appType}} | Car Project</title>
+
+    <meta name="description" content="Example Monolith">
+    <meta name="author" content="@hepidad">
+
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet">
+
+  </head>
+  <body>
+
+  <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Monolith | Car Project</h1>
+                <h3>Demo:
+                        <a href="{{url_for('createcar')}}">Create</a>
+                        /
+                        <a href="{{url_for('readcar')}}">Read</a>
+                        /
+                        <a href="{{url_for('updatecar')}}">Update</a>
+                        /
+                        <a href="{{url_for('deletecar')}}">Delete</a>
+                        /
+                        <a href="{{url_for('searchcar')}}">Search</a>
+                </h3> 
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <h4>Search Car Data</h4>
+                
+                <form action="{{ url_for('searchcar') }}" method="GET" class="form-inline mb-4">
+                    <div class="form-group mr-2">
+                        <input type="text" class="form-control" name="keyword" placeholder="Masukkan nama mobil..." value="{{ keyword if keyword else '' }}" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Cari Mobil</button>
+                    <a href="{{ url_for('searchcar') }}" class="btn btn-secondary ml-1">Reset</a>
+                </form>
+                <hr>
+
+                <h5>Hasil Pencarian:</h5>
+                {% if cars %}
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nama Mobil</th>
+                            <th>Brand</th>
+                            <th>Model</th>
+                            <th>Harga</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for car in cars %}
+                        <tr>
+                            <td>{{ car.id }}</td>
+                            <td>{{ car.carname }}</td>
+                            <td>{{ car.carbrand }}</td>
+                            <td>{{ car.carmodel }}</td>
+                            <td>{{ car.carprice }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                    {% if keyword %}
+                        <div class="alert alert-warning">Mobil dengan nama "{{ keyword }}" tidak ditemukan.</div>
+                    {% else %}
+                        <div class="alert alert-info">Silakan masukkan kata kunci untuk memulai pencarian.</div>
+                    {% endif %}
+                {% endif %}
+                </div>
+        </div>
+  </div>
+    <script src="../static/js/bootstrap.min.js"></script>
+  </body>
+</html>
